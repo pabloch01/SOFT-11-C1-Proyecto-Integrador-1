@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SICEN | Revisión Técnica de Censos</title>
+
+    <!--  Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+
+    <!--  Font Awesome 6 (íconos) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!--  Tipografía institucional: Libre Baskerville -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+
+    <!--  Estilos propios: siempre después de Bootstrap. estilo.css va primero porque define las variables -->
+    <link rel="stylesheet" href="css/estilo.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+
+    <!--  Modo claro / oscuro -->
+    <script src="js/tema.js"></script>
+</head>
+
+<body>
+
+    <!--  Enlace para saltar la navegación -->
+    <a class="enlace-saltar" href="#contenido">Saltar al contenido principal</a>
+
+    <div class="diseno-panel">
+
+        <!--  Barra lateral: en celular se abre como panel deslizable (offcanvas) -->
+        <aside class="barra-lateral offcanvas-lg offcanvas-start" tabindex="-1" id="barraLateral"
+            aria-label="Menú del técnico">
+            <div class="offcanvas-header d-lg-none">
+                <p class="h5 mb-0 text-white">Menú</p>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#barraLateral"
+                    aria-label="Cerrar menú"></button>
+            </div>
+
+            <div class="offcanvas-body d-flex flex-column">
+                <a href="dashboard-tecnico.html" class="marca-barra-lateral">
+                    <span class="logo-sicen" aria-hidden="true">CR</span> SICEN
+                </a>
+                <p class="subtitulo-marca">Ministerio de Educación Pública</p>
+
+                <nav aria-label="Navegación principal">
+                    <ul class="menu-lateral">
+                        <li>
+                            <a href="#centrosAsignados">
+                                <i class="fa-solid fa-school" aria-hidden="true"></i> Centros Asignados
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#formulariosRevision" aria-current="page">
+                                <i class="fa-regular fa-file-lines" aria-hidden="true"></i> Formularios en Revisión
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i> Cerrar sesión
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="pie-barra-lateral">
+                    <p class="mb-0">Dirección de Planificación</p>
+                    <p class="mb-0">v1.0 — 2026</p>
+                </div>
+            </div>
+        </aside>
+
+        <div class="columna-contenido">
+
+            <!--  Encabezado superior -->
+            <header class="encabezado-superior">
+                <button type="button" class="btn-icono d-lg-none" data-bs-toggle="offcanvas"
+                    data-bs-target="#barraLateral" aria-controls="barraLateral" aria-label="Abrir menú">
+                    <i class="fa-solid fa-bars" aria-hidden="true"></i>
+                </button>
+                <h1 class="me-auto">Revisión Técnica de Censos</h1>
+
+                <button type="button" class="btn-tema" aria-pressed="false">
+                    <i class="fa-regular fa-moon" aria-hidden="true"></i>
+                    <span>Modo oscuro</span>
+                </button>
+
+                <div class="datos-usuario">
+                    <div>
+                        <p class="nombre-usuario">Carlos Mora Solís</p>
+                        <p class="detalle-usuario">Técnico de la DAE — Alajuela y Heredia</p>
+                    </div>
+                    <span class="avatar-iniciales" aria-hidden="true">CM</span>
+                </div>
+            </header>
+
+            <!--  Contenido principal -->
+            <main id="contenido" class="contenido-principal" tabindex="-1">
+
+                <!--  Formularios en revisión (RF-010, RF-011 y RF-013) -->
+                <section id="formulariosRevision" class="mb-5" aria-labelledby="tituloRevision">
+                    <h2 class="titulo-seccion" id="tituloRevision">Formularios en Revisión</h2>
+
+                    <!--  Filtros -->
+                    <div class="row g-3 mb-3">
+                        <div class="col-12 col-sm-6 col-xl-3">
+                            <label for="filtroEstado" class="form-label">Estado</label>
+                            <select id="filtroEstado" class="form-select">
+                                <option value="">Todos los estados</option>
+                                <option value="en_revision">En revisión</option>
+                                <option value="en_subsane">En subsane</option>
+                                <option value="aceptado">Aceptado</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-sm-6 col-xl-3">
+                            <label for="filtroCentro" class="form-label">Centro educativo</label>
+                            <!--  JavaScript agrega los centros asignados al técnico -->
+                            <select id="filtroCentro" class="form-select">
+                                <option value="">Todos los centros</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-sm-6 col-xl-3">
+                            <label for="filtroCenso" class="form-label">Censo</label>
+                            <select id="filtroCenso" class="form-select">
+                                <option value="">Todos los censos</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-sm-6 col-xl-3">
+                            <label for="buscarCentro" class="form-label">Búsqueda rápida</label>
+                            <div class="campo-busqueda">
+                                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                                <input type="search" id="buscarCentro" class="form-control" placeholder="Buscar centro…">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--  Tabla de formularios remitidos -->
+                    <div class="contenedor-tabla mb-4">
+                        <div class="table-responsive">
+                            <table class="table tabla-sicen table-striped">
+                                <caption class="visually-hidden">Formularios remitidos por los centros educativos asignados</caption>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Centro educativo</th>
+                                        <th scope="col">Censo</th>
+                                        <th scope="col">Formulario</th>
+                                        <th scope="col">Estado</th>
+                                        <th scope="col">Fecha de remisión</th>
+                                        <th scope="col" class="text-end">Acción</th>
+                                    </tr>
+                                </thead>
+                                <!--  JavaScript crea una fila por cada formulario -->
+                                <tbody id="cuerpoTablaRevision"></tbody>
+                            </table>
+                        </div>
+                        <p class="pie-tabla mb-0" id="resumenRevision" aria-live="polite"></p>
+                    </div>
+
+                    <!--  Detalle de la revisión -->
+                    <article class="panel" aria-labelledby="tituloDetalle">
+                        <div class="d-flex flex-wrap justify-content-between align-items-start gap-2">
+                            <div>
+                                <h3 class="h5 mb-1" id="tituloDetalle" tabindex="-1">Revisión</h3>
+                                <p class="subtitulo-panel mb-0">Visualice los datos declarados y emita un criterio técnico de aceptación o devolución.</p>
+                            </div>
+                            <span id="badgeEstadoDetalle"></span>
+                        </div>
+                        <hr>
+
+                        <h4 class="h6 mb-3">Respuestas declaradas por el centro educativo</h4>
+                        <!--  JavaScript crea un elemento por cada respuesta -->
+                        <ul class="lista-respuestas mb-4" id="listaRespuestas"></ul>
+
+                        <!--  Resolución técnica: no es un <form> porque tiene dos acciones distintas (aceptar o devolver) -->
+                        <div id="formResolucion" role="group" aria-labelledby="tituloResolucion">
+                            <h4 class="h6" id="tituloResolucion">Resolución técnica del censo</h4>
+
+                            <!--  Aviso cuando el formulario ya no está en revisión -->
+                            <div class="aviso-informativo mb-3 d-none" id="avisoResolucion" role="note">
+                                <i class="fa-solid fa-lock" aria-hidden="true"></i>
+                                <p class="mb-0" id="textoAvisoResolucion"></p>
+                            </div>
+
+                            <label for="motivoDevolucion" class="form-label">
+                                Motivo de devolución (requerido únicamente si devuelve para corrección)
+                            </label>
+                            <textarea id="motivoDevolucion" name="motivoDevolucion" class="form-control" rows="3" maxlength="500"
+                                placeholder="Indique qué debe corregir el centro y por qué (mínimo 20 caracteres)"
+                                aria-describedby="error-motivoDevolucion"></textarea>
+                            <div class="invalid-feedback" id="error-motivoDevolucion"></div>
+
+                            <div class="d-flex flex-column flex-md-row justify-content-end gap-2 mt-3">
+                                <button type="button" id="btnDevolver" class="btn btn-correccion">
+                                    <i class="fa-solid fa-rotate-left me-1" aria-hidden="true"></i> Devolver para corrección
+                                </button>
+                                <button type="button" id="btnAceptar" class="btn btn-primary">
+                                    <i class="fa-solid fa-check me-1" aria-hidden="true"></i> Aceptar formulario
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+                </section>
+
+                <!--  Centros asignados por zona (RF-008) -->
+                <section id="centrosAsignados" aria-labelledby="tituloCentros">
+                    <h2 class="titulo-seccion" id="tituloCentros">Centros Asignados</h2>
+                    <!--  JavaScript completa las provincias del técnico -->
+                    <p class="texto-secundario" id="textoZonas"></p>
+                    <div class="panel">
+                        <ul class="lista-centros" id="listaCentros"></ul>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!--  Scripts: primero las bibliotecas de terceros, al final los propios -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="js/validaciones.js"></script>
+    <script src="js/datos-ejemplo.js"></script>
+    <script src="js/dashboard-tecnico.js"></script>
+</body>
+
+</html>

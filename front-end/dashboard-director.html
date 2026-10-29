@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SICEN | Mis censos</title>
+
+    <!--  Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+
+    <!--  Font Awesome 6 (íconos) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!--  Tipografía institucional: Libre Baskerville -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+
+    <!--  Estilos propios: siempre después de Bootstrap. estilo.css va primero porque define las variables -->
+    <link rel="stylesheet" href="css/estilo.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+
+    <!--  Modo claro / oscuro -->
+    <script src="js/tema.js"></script>
+</head>
+
+<body>
+
+    <!--  Enlace para saltar la navegación -->
+    <a class="enlace-saltar" href="#contenido">Saltar al contenido principal</a>
+
+    <!--  Navegación superior del Director -->
+    <header>
+        <nav class="navbar navbar-expand-md navegacion-director py-2" aria-label="Navegación principal">
+            <div class="container-fluid px-3 px-lg-4 gap-2">
+                <a class="navbar-brand d-flex align-items-center gap-2" href="dashboard-director.html">
+                    <span class="logo-sicen" aria-hidden="true">CR</span>
+                    <span>
+                        <span class="d-block fw-bold lh-1">SICEN</span>
+                        <span class="subtitulo-marca small">Director de Centro Educativo</span>
+                    </span>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuDirector"
+                    aria-controls="menuDirector" aria-expanded="false" aria-label="Abrir menú">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="menuDirector">
+                    <ul class="navbar-nav me-auto ms-md-4">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#misCensos" aria-current="page">Mis Censos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#misCentros">Mis Centros</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Cerrar sesión</a>
+                        </li>
+                    </ul>
+
+                    <div class="d-flex flex-wrap align-items-center gap-3 py-2 py-md-0">
+                        <button type="button" class="btn-tema" aria-pressed="false">
+                            <i class="fa-regular fa-moon" aria-hidden="true"></i>
+                            <span>Modo oscuro</span>
+                        </button>
+                        <div class="datos-usuario">
+                            <div>
+                                <p class="nombre-usuario">Dir. María Fernanda Rojas</p>
+                                <!--  JavaScript muestra aquí el centro seleccionado -->
+                                <p class="detalle-usuario" id="centroUsuario">Escuela República de Chile</p>
+                            </div>
+                            <span class="avatar-iniciales" aria-hidden="true">MR</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!--  Contenido principal -->
+    <main id="contenido" class="contenido-principal container-xxl" tabindex="-1">
+
+        <!--  Mis censos disponibles (RF-014) -->
+        <section id="misCensos" class="panel mb-4" aria-labelledby="tituloMisCensos">
+            <div class="row g-3 align-items-end">
+                <div class="col-12 col-lg-7">
+                    <h1 class="h3 mb-1" id="tituloMisCensos">Mis Censos Disponibles</h1>
+                    <p class="subtitulo-panel mb-0">Complete los cuestionarios requeridos por el MEP para su centro educativo asignado.</p>
+                </div>
+                <div class="col-12 col-lg-5">
+                    <label for="selectCentro" class="form-label">Centro educativo</label>
+                    <select id="selectCentro" class="form-select" aria-describedby="avisoCentros"></select>
+                </div>
+            </div>
+            <hr>
+            <p class="small mb-0" id="avisoCentros">
+                <i class="fa-solid fa-circle-info me-1" aria-hidden="true"></i>
+                <!--  JavaScript completa la cantidad de centros -->
+                <span id="textoCantidadCentros"></span>
+            </p>
+        </section>
+
+        <!--  Tarjetas de censos del centro seleccionado: JavaScript crea una por censo -->
+        <section class="mb-4" aria-labelledby="tituloTarjetas">
+            <h2 class="visually-hidden" id="tituloTarjetas">Censos del centro seleccionado</h2>
+            <div class="row g-3" id="contenedorTarjetas" aria-live="polite"></div>
+        </section>
+
+        <!--  Formulario censal (RF-009 y RF-015) -->
+        <section class="panel mb-4" aria-labelledby="tituloFormularioCensal">
+            <h2 class="h4 mb-1" id="tituloFormularioCensal" tabindex="-1">Formulario censal</h2>
+            <p class="subtitulo-panel">
+                Complete las secciones del censo. Los campos con
+                <span class="obligatorio" aria-hidden="true">*</span><span class="visually-hidden">asterisco</span>
+                son obligatorios.
+            </p>
+
+            <!--  Estado y avance del formulario -->
+            <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
+                <span id="badgeEstadoFormulario"></span>
+                <div class="flex-grow-1 ancho-progreso">
+                    <div class="d-flex justify-content-between small mb-1">
+                        <span id="textoProgreso">Progreso del formulario</span>
+                        <span id="porcentajeProgreso" aria-hidden="true">0 %</span>
+                    </div>
+                    <div class="progress" role="progressbar" aria-labelledby="textoProgreso" aria-valuemin="0"
+                        aria-valuemax="100" aria-valuenow="0" id="barraProgreso">
+                        <div class="progress-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!--  Observaciones del técnico: solo se muestra si el formulario está en subsane -->
+            <div class="aviso-informativo mb-3 d-none" id="avisoSubsane" role="note">
+                <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+                <div>
+                    <p class="fw-bold mb-1">Observaciones del técnico de la DAE</p>
+                    <p class="mb-0" id="textoMotivoSubsane"></p>
+                </div>
+            </div>
+
+            <!--  Aviso cuando el formulario ya fue remitido o aceptado -->
+            <div class="aviso-informativo mb-3 d-none" id="avisoSoloLectura" role="note">
+                <i class="fa-solid fa-lock" aria-hidden="true"></i>
+                <p class="mb-0" id="textoSoloLectura"></p>
+            </div>
+
+            <!--  Datos precargados del centro educativo (RF-015) -->
+            <div class="datos-precargados mb-4">
+                <h3>Datos precargados del centro educativo</h3>
+                <dl class="row mb-0" id="listaDatosCentro"></dl>
+            </div>
+
+            <form id="formCensal" novalidate>
+                <!--  fieldset: al desactivarlo se bloquean todos los campos del formulario -->
+                <fieldset id="camposFormulario">
+                    <legend class="visually-hidden">Preguntas del formulario censal</legend>
+
+                    <!--  Pregunta 1: número -->
+                    <div class="mb-4">
+                        <label for="cantidadEstudiantes" class="form-label">
+                            1. Cantidad total de estudiantes matriculados al inicio del ciclo lectivo
+                            <span class="obligatorio" aria-hidden="true">*</span>
+                        </label>
+                        <input type="number" id="cantidadEstudiantes" name="cantidadEstudiantes" class="form-control campo-numero" min="1" max="5000" inputmode="numeric" required
+                            aria-describedby="ayuda-cantidadEstudiantes error-cantidadEstudiantes">
+                        <div class="form-text" id="ayuda-cantidadEstudiantes">Ingrese el número total sumando todos los niveles vigentes (de 1 a 5000).</div>
+                        <div class="invalid-feedback" id="error-cantidadEstudiantes"></div>
+                    </div>
+
+                    <!--  Pregunta 2: selección múltiple -->
+                    <fieldset class="mb-4" aria-describedby="error-grupoNiveles">
+                        <legend class="form-label">
+                            2. Marque los niveles educativos que se imparten actualmente en el centro
+                            <span class="obligatorio" aria-hidden="true">*</span>
+                        </legend>
+                        <div class="d-flex flex-wrap gap-3" id="grupoNiveles">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="niveles" id="nivelPreescolar" value="Preescolar">
+                                <label class="form-check-label" for="nivelPreescolar">Preescolar</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="niveles" id="nivelPrimaria" value="I y II Ciclo">
+                                <label class="form-check-label" for="nivelPrimaria">I y II Ciclo (Primaria)</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="niveles" id="nivelSecundaria" value="III Ciclo">
+                                <label class="form-check-label" for="nivelSecundaria">III Ciclo (Secundaria)</label>
+                            </div>
+                        </div>
+                        <div class="invalid-feedback" id="error-grupoNiveles"></div>
+                    </fieldset>
+
+                    <!--  Pregunta 3: selección única -->
+                    <fieldset class="mb-4" aria-describedby="error-grupoInternet">
+                        <legend class="form-label">
+                            3. ¿El centro educativo cuenta con acceso a internet en funcionamiento?
+                            <span class="obligatorio" aria-hidden="true">*</span>
+                        </legend>
+                        <div class="d-flex flex-wrap gap-3" id="grupoInternet">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="internet" id="internetSi" value="Sí, acceso total institucional">
+                                <label class="form-check-label" for="internetSi">Sí, acceso total institucional</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="internet" id="internetParcial" value="Sí, acceso parcial">
+                                <label class="form-check-label" for="internetParcial">Sí, acceso parcial</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="internet" id="internetNo" value="No, sin conectividad">
+                                <label class="form-check-label" for="internetNo">No, sin conectividad</label>
+                            </div>
+                        </div>
+                        <div class="invalid-feedback" id="error-grupoInternet"></div>
+                    </fieldset>
+
+                    <!--  Pregunta 4: descripción abierta (opcional) -->
+                    <div class="mb-2">
+                        <label for="observaciones" class="form-label">
+                            4. Observaciones o condiciones generales adicionales de la matrícula
+                        </label>
+                        <textarea id="observaciones" name="observaciones" class="form-control" rows="3" maxlength="500"
+                            aria-describedby="contador-observaciones"></textarea>
+                        <div class="d-flex justify-content-end">
+                            <small id="contador-observaciones" class="texto-secundario">0 / 500</small>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!--  Botones -->
+                <div class="d-flex flex-column flex-md-row justify-content-end gap-2 mt-3">
+                    <button type="button" id="btnGuardarBorrador" class="btn btn-outline-secondary">
+                        <i class="fa-regular fa-floppy-disk me-1" aria-hidden="true"></i> Guardar borrador
+                    </button>
+                    <button type="submit" id="btnRemitir" class="btn btn-primary">
+                        <i class="fa-solid fa-paper-plane me-1" aria-hidden="true"></i> Remitir formulario
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!--  Mis centros (RF-014: un director puede tener varios centros) -->
+        <section id="misCentros" aria-labelledby="tituloMisCentros">
+            <h2 class="titulo-seccion" id="tituloMisCentros">Mis Centros</h2>
+            <div class="row g-3" id="contenedorCentros"></div>
+        </section>
+    </main>
+
+    <!--  Pie de página -->
+    <footer class="pie-acceso pb-4">
+        <p>Ministerio de Educación Pública de Costa Rica — Dirección de Planificación</p>
+        <p>SICEN v1.0 — 2026</p>
+    </footer>
+
+    <!--  Scripts: primero las bibliotecas de terceros, al final los propios -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="js/validaciones.js"></script>
+    <script src="js/datos-ejemplo.js"></script>
+    <script src="js/dashboard-director.js"></script>
+</body>
+
+</html>
