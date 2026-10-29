@@ -1,0 +1,105 @@
+/*  Pantallas de acceso de SICEN
+    Selección de tipo de usuario y pantallas de inicio de sesión (después de estilo.css). */
+
+/*  Pantallas de acceso (selección de rol y logins) */
+.pantalla-acceso {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 4.5rem 1rem 2rem;
+}
+
+.encabezado-acceso {
+    margin-bottom: 1.75rem;
+    text-align: center;
+}
+
+.encabezado-acceso .nombre-sistema {
+    margin: 0.6rem 0 0.1rem;
+    font-size: 1.6rem;
+}
+
+.tarjeta-acceso {
+    width: 100%;
+    max-width: 440px;
+    padding: 2rem;
+    border: 1px solid var(--color-borde);
+    border-radius: 12px;
+    background-color: var(--color-superficie);
+    box-shadow: 0 4px 14px rgba(2, 26, 83, 0.06);
+}
+
+.tarjeta-acceso h2 {
+    font-size: 1.25rem;
+}
+
+/* Tarjeta de selección de rol: fondo blanco, borde Gris Claro */
+.tarjeta-rol {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.9rem;
+    padding: 1rem;
+    border: 1px solid var(--color-borde);
+    border-radius: 10px;
+    background-color: var(--color-superficie);
+}
+
+.tarjeta-rol h2 {
+    margin-bottom: 0.15rem;
+    font-size: 1rem;
+}
+
+.tarjeta-rol p {
+    margin-bottom: 0;
+    color: var(--color-texto-secundario);
+    font-size: 0.82rem;
+}
+
+.tarjeta-rol .btn {
+    flex-shrink: 0;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.85rem;
+}
+
+/* En celular el botón baja y ocupa todo el ancho */
+@media (max-width: 575.98px) {
+    .tarjeta-acceso {
+        padding: 1.5rem 1.25rem;
+    }
+
+    .tarjeta-rol {
+        flex-wrap: wrap;
+    }
+
+    .tarjeta-rol .flex-grow-1 {
+        flex-basis: calc(100% - 60px);
+    }
+
+    .tarjeta-rol .btn {
+        width: 100%;
+    }
+}
+
+/* Ícono circular con fondo Azul Francia claro */
+.icono-circular {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: var(--color-icono-fondo);
+    color: var(--color-icono);
+    font-size: 1.1rem;
+}
+
+.icono-circular-grande {
+    width: 56px;
+    height: 56px;
+    font-size: 1.4rem;
+}
