@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SICEN | Constructor de Formularios</title>
+
+    <!--  Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+
+    <!--  Font Awesome 6 (íconos) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!--  Tipografía institucional: Libre Baskerville -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+
+    <!--  Estilos propios: siempre después de Bootstrap. estilo.css va primero porque define las variables -->
+    <link rel="stylesheet" href="css/estilo.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+
+    <!--  Modo claro / oscuro -->
+    <script src="js/tema.js"></script>
+</head>
+
+<body>
+
+    <!--  Enlace para saltar la navegación -->
+    <a class="enlace-saltar" href="#contenido">Saltar al contenido principal</a>
+
+    <div class="diseno-panel">
+
+        <!--  Barra lateral: en celular se abre como panel deslizable (offcanvas) -->
+        <aside class="barra-lateral offcanvas-lg offcanvas-start" tabindex="-1" id="barraLateral"
+            aria-label="Menú de administración">
+            <div class="offcanvas-header d-lg-none">
+                <p class="h5 mb-0 text-white">Menú</p>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#barraLateral"
+                    aria-label="Cerrar menú"></button>
+            </div>
+
+            <div class="offcanvas-body d-flex flex-column">
+                <a href="dashboard-admin.html" class="marca-barra-lateral">
+                    <span class="logo-sicen" aria-hidden="true">CR</span> SICEN
+                </a>
+                <p class="subtitulo-marca">Ministerio de Educación Pública</p>
+
+                <nav aria-label="Navegación principal">
+                    <ul class="menu-lateral">
+                        <li>
+                            <a href="dashboard-admin.html">
+                                <i class="fa-solid fa-table-cells-large" aria-hidden="true"></i> Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <a href="formulario-registrar.html" aria-current="page">
+                                <i class="fa-regular fa-file-lines" aria-hidden="true"></i> Formularios
+                            </a>
+                        </li>
+                        <li>
+                            <a href="censo-listar.html">
+                                <i class="fa-solid fa-box-archive" aria-hidden="true"></i> Censos
+                            </a>
+                        </li>
+                        <li>
+                            <a href="colaborador-listar.html">
+                                <i class="fa-solid fa-user-group" aria-hidden="true"></i> Colaboradores
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i> Cerrar sesión
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="pie-barra-lateral">
+                    <p class="mb-0">Dirección de Planificación</p>
+                    <p class="mb-0">v1.0 — 2026</p>
+                </div>
+            </div>
+        </aside>
+
+        <div class="columna-contenido">
+
+            <!--  Encabezado superior -->
+            <header class="encabezado-superior">
+                <button type="button" class="btn-icono d-lg-none" data-bs-toggle="offcanvas"
+                    data-bs-target="#barraLateral" aria-controls="barraLateral" aria-label="Abrir menú">
+                    <i class="fa-solid fa-bars" aria-hidden="true"></i>
+                </button>
+                <h1 class="me-auto">Constructor de Formularios</h1>
+
+                <button type="button" class="btn-tema" aria-pressed="false">
+                    <i class="fa-regular fa-moon" aria-hidden="true"></i>
+                    <span>Modo oscuro</span>
+                </button>
+
+                <div class="datos-usuario">
+                    <div>
+                        <p class="nombre-usuario">Jefatura DAE</p>
+                        <p class="detalle-usuario">jefatura.dae@mep.go.cr</p>
+                    </div>
+                    <span class="avatar-iniciales" aria-hidden="true">JD</span>
+                </div>
+            </header>
+
+            <!--  Contenido principal -->
+            <main id="contenido" class="contenido-principal" tabindex="-1">
+
+                <p class="texto-secundario">
+                    Los campos marcados con <span class="obligatorio" aria-hidden="true">*</span>
+                    <span class="visually-hidden">asterisco</span> son obligatorios.
+                </p>
+
+                <!--  Datos generales del formulario (RF-001) -->
+                <form id="formFormulario" class="panel mb-4" novalidate aria-labelledby="tituloDatosGenerales">
+                    <h2 class="titulo-seccion" id="tituloDatosGenerales">Datos generales</h2>
+
+                    <div class="row g-3">
+                        <!--  Plantilla: permite crear el formulario desde cero o a partir de otro -->
+                        <div class="col-12 col-lg-4">
+                            <label for="plantilla" class="form-label">Crear a partir de</label>
+                            <select id="plantilla" name="plantilla" class="form-select" aria-describedby="ayuda-plantilla">
+                                <option value="">Formulario en blanco</option>
+                                <option value="matricula">Plantilla: Matrícula Inicial</option>
+                                <option value="infraestructura">Plantilla: Infraestructura Física</option>
+                            </select>
+                            <div class="form-text" id="ayuda-plantilla">Al elegir una plantilla se cargan sus preguntas.</div>
+                        </div>
+
+                        <div class="col-12 col-md-8 col-lg-5">
+                            <label for="nombreFormulario" class="form-label">
+                                Nombre del formulario <span class="obligatorio" aria-hidden="true">*</span>
+                            </label>
+                            <input type="text" id="nombreFormulario" name="nombreFormulario" class="form-control"
+                                placeholder="Ej. Censo Matrícula Inicial 2027" maxlength="80" required
+                                aria-describedby="error-nombreFormulario">
+                            <div class="invalid-feedback" id="error-nombreFormulario"></div>
+                        </div>
+
+                        <div class="col-12 col-md-4 col-lg-3">
+                            <label for="estadoFormulario" class="form-label">
+                                Estado <span class="obligatorio" aria-hidden="true">*</span>
+                            </label>
+                            <select id="estadoFormulario" name="estadoFormulario" class="form-select" required
+                                aria-describedby="error-estadoFormulario">
+                                <option value="borrador" selected>Borrador</option>
+                                <option value="publicado">Publicado</option>
+                            </select>
+                            <div class="invalid-feedback" id="error-estadoFormulario"></div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="descripcionFormulario" class="form-label">
+                                Descripción del formulario <span class="obligatorio" aria-hidden="true">*</span>
+                            </label>
+                            <textarea id="descripcionFormulario" name="descripcionFormulario" class="form-control" rows="2"
+                                maxlength="300" placeholder="Explique para qué se utiliza este formulario (mínimo 15 caracteres)"
+                                required aria-describedby="error-descripcionFormulario"></textarea>
+                            <div class="invalid-feedback" id="error-descripcionFormulario"></div>
+                        </div>
+
+                        <!--  Ofertas educativas: definen a qué centros se les asigna el formulario (RF-005, RF-014) -->
+                        <div class="col-12">
+                            <fieldset aria-describedby="ayuda-ofertas error-grupoOfertas">
+                                <legend class="form-label">
+                                    Ofertas educativas a las que aplica <span class="obligatorio" aria-hidden="true">*</span>
+                                </legend>
+                                <div class="grupo-opciones d-flex flex-wrap gap-3" id="grupoOfertas">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="ofertas" id="ofertaPreescolar" value="Preescolar">
+                                        <label class="form-check-label" for="ofertaPreescolar">Preescolar</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="ofertas" id="ofertaPrimaria" value="I y II Ciclo">
+                                        <label class="form-check-label" for="ofertaPrimaria">I y II Ciclo</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="ofertas" id="ofertaSecundaria" value="III Ciclo y Diversificada">
+                                        <label class="form-check-label" for="ofertaSecundaria">III Ciclo y Educación Diversificada</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="ofertas" id="ofertaAdultos" value="Educación de adultos">
+                                        <label class="form-check-label" for="ofertaAdultos">Educación de adultos</label>
+                                    </div>
+                                </div>
+                                <div class="form-text" id="ayuda-ofertas">El formulario solo se asigna a los centros que tienen alguna de estas ofertas.</div>
+                                <div class="invalid-feedback" id="error-grupoOfertas"></div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </form>
+
+                <!--  Preguntas agregadas (RF-001, RF-003) -->
+                <section class="mb-4" aria-labelledby="tituloPreguntas">
+                    <h2 class="titulo-seccion" id="tituloPreguntas">
+                        Preguntas agregadas (<span id="cantidadPreguntas">0</span>)
+                    </h2>
+
+                    <!--  JavaScript crea una tarjeta por cada pregunta -->
+                    <div id="listaPreguntas"></div>
+                    <p class="texto-secundario" id="sinPreguntas">Todavía no hay preguntas. Agregue la primera en la sección "Nueva pregunta".</p>
+                    <div class="invalid-feedback" id="error-listaPreguntas"></div>
+
+                    <!--  aria-live: el lector de pantalla anuncia cuando se agrega o elimina una pregunta -->
+                    <p class="visually-hidden" id="anuncioPreguntas" aria-live="polite"></p>
+                </section>
+
+                <!--  Nueva pregunta: es un formulario aparte porque se valida por separado -->
+                <form id="formPregunta" class="panel panel-suave mb-4" novalidate aria-labelledby="tituloNuevaPregunta">
+                    <h2 class="titulo-seccion" id="tituloNuevaPregunta">Nueva pregunta</h2>
+
+                    <div class="row g-3">
+                        <div class="col-12 col-lg-8">
+                            <label for="textoPregunta" class="form-label">
+                                Texto de la pregunta <span class="obligatorio" aria-hidden="true">*</span>
+                            </label>
+                            <input type="text" id="textoPregunta" name="textoPregunta" class="form-control" maxlength="200"
+                                placeholder="Escriba la nueva pregunta aquí" required aria-describedby="error-textoPregunta">
+                            <div class="invalid-feedback" id="error-textoPregunta"></div>
+                        </div>
+
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <label for="tipoRespuesta" class="form-label">
+                                Tipo de respuesta <span class="obligatorio" aria-hidden="true">*</span>
+                            </label>
+                            <select id="tipoRespuesta" name="tipoRespuesta" class="form-select" required
+                                aria-describedby="error-tipoRespuesta">
+                                <option value="unica" selected>Selección única</option>
+                                <option value="multiple">Selección múltiple</option>
+                                <option value="abierta">Descripción abierta</option>
+                            </select>
+                            <div class="invalid-feedback" id="error-tipoRespuesta"></div>
+                        </div>
+
+                        <!--  Opciones: solo se muestran para selección única o múltiple -->
+                        <div class="col-12 col-lg-8" id="contenedorOpciones">
+                            <label for="opcionesPregunta" class="form-label">
+                                Opciones de respuesta <span class="obligatorio" aria-hidden="true">*</span>
+                            </label>
+                            <input type="text" id="opcionesPregunta" name="opcionesPregunta" class="form-control"
+                                placeholder="Ej. Sí, No" required aria-describedby="ayuda-opcionesPregunta error-opcionesPregunta">
+                            <div class="form-text" id="ayuda-opcionesPregunta">Separe cada opción con una coma. Mínimo 2 opciones.</div>
+                            <div class="invalid-feedback" id="error-opcionesPregunta"></div>
+                        </div>
+
+                        <div class="col-12 col-md-6 col-lg-4 d-flex align-items-center">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="preguntaObligatoria"
+                                    name="preguntaObligatoria" checked>
+                                <label class="form-check-label" for="preguntaObligatoria">Respuesta obligatoria</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-end gap-2 mt-4">
+                        <!--  Solo se muestra mientras se edita una pregunta -->
+                        <button type="button" id="btnCancelarEdicion" class="btn btn-outline-secondary d-none">Cancelar edición</button>
+                        <button type="submit" id="btnAgregarPregunta" class="btn btn-primary">
+                            <i class="fa-solid fa-plus me-1" aria-hidden="true"></i> Agregar pregunta
+                        </button>
+                    </div>
+                </form>
+
+                <!--  Botones del formulario completo: el atributo form los conecta con formFormulario -->
+                <div class="d-flex flex-column flex-md-row justify-content-end gap-2">
+                    <button type="button" id="btnCancelar" class="btn btn-outline-secondary">Cancelar</button>
+                    <button type="submit" form="formFormulario" class="btn btn-primary">
+                        <i class="fa-solid fa-floppy-disk me-1" aria-hidden="true"></i> Guardar formulario
+                    </button>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!--  Scripts: primero las bibliotecas de terceros, al final los propios -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="js/validaciones.js"></script>
+    <script src="js/formulario-registrar.js"></script>
+</body>
+
+</html>
