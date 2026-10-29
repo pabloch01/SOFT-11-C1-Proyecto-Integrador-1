@@ -1,0 +1,724 @@
+/*  Estilos generales de SICEN
+    Variables de color y tipografía (Manual de identidad gráfica del MEP 2026-2030), modo oscuro,
+    base y componentes compartidos por todas las pantallas: botones, campos, validación,
+    badges, tablas, barra de progreso, búsqueda, avisos y mensajes.
+    IMPORTANTE: este archivo se carga primero, porque define las variables que usan los demás. */
+
+/*  Variables: modo claro */
+:root,
+[data-bs-theme="light"] {
+    /* Paleta institucional del MEP */
+    --azul-marino: #021a53;          /* Azul Marino Oscuro / Sombra */
+    --azul-real: #002e7a;            /* Azul Real / Institucional */
+    --azul-francia: #164687;         /* Azul Francia / Brillant */
+    --dorado: #cfac65;               /* Dorado Institucional / Ocre */
+    --gris-claro: #c1c5c8;           /* Gris Claro / Plata */
+    --gris-pizarra: #5c6670;         /* Color auxiliar: texto secundario (contraste 5.85:1) */
+    --blanco: #ffffff;
+
+    /* Colores según su función (cambian en modo oscuro) */
+    --color-fondo: #f5f6f8;
+    --color-superficie: var(--blanco);
+    --color-superficie-suave: #f0f3f8;
+    --color-texto: var(--azul-marino);
+    --color-texto-secundario: var(--gris-pizarra);
+    --color-borde: var(--gris-claro);
+    --color-enlace: var(--azul-real);
+    --color-foco: var(--azul-francia);
+    --color-primario-fondo: var(--azul-real);
+    --color-primario-texto: var(--blanco);
+    --color-primario-hover: var(--azul-marino);
+    --color-secundario: var(--azul-real);
+    --color-icono-fondo: rgba(22, 70, 135, 0.12);    /* Azul Francia claro */
+    --color-icono: var(--azul-francia);
+    --color-tabla-encabezado: var(--azul-marino);
+    --color-fila-alterna: rgba(193, 197, 200, 0.1);  /* Gris Claro al 10 % */
+    --color-fila-seleccionada: rgba(22, 70, 135, 0.08);
+    --color-barra-lateral: var(--azul-marino);
+    --color-barra-lateral-activo: var(--azul-real);
+    --color-campo-fondo: var(--blanco);
+    --color-error: #b42318;
+    --color-error-fondo: #fff6f5;
+    --color-exito: #1e7a46;
+
+    /* Tipografía oficial: Libre Baskerville es la versión web de Baskerville */
+    --fuente-sicen: "Libre Baskerville", Baskerville, "Baskerville Old Face", serif;
+
+    /* Variables de Bootstrap: sus componentes toman estos valores */
+    --bs-body-font-family: var(--fuente-sicen);
+    --bs-body-font-size: 0.95rem;
+    --bs-body-bg: var(--color-fondo);
+    --bs-body-color: var(--color-texto);
+    --bs-secondary-color: var(--color-texto-secundario);
+    --bs-border-color: var(--color-borde);
+    --bs-link-color: var(--color-enlace);
+    --bs-link-color-rgb: 0, 46, 122;
+    --bs-link-hover-color: var(--azul-marino);
+    --bs-link-hover-color-rgb: 2, 26, 83;
+    --bs-heading-color: var(--color-texto);
+    --bs-form-invalid-color: var(--color-error);
+    --bs-form-invalid-border-color: var(--color-error);
+    --bs-form-valid-color: var(--color-exito);
+    --bs-form-valid-border-color: var(--color-exito);
+}
+
+
+/*  Variables: modo oscuro (RNF-001)
+    Bootstrap activa este bloque cuando <html> tiene data-bs-theme="dark" */
+[data-bs-theme="dark"] {
+    --color-fondo: var(--azul-marino);
+    --color-superficie: var(--azul-real);
+    --color-superficie-suave: #0a2a66;
+    --color-texto: var(--blanco);
+    --color-texto-secundario: var(--gris-claro);     /* 7.2:1 sobre Azul Real */
+    --color-borde: var(--gris-claro);
+    --color-enlace: var(--dorado);                   /* 5.83:1 sobre Azul Real */
+    --color-foco: var(--dorado);
+    --color-primario-fondo: var(--dorado);
+    --color-primario-texto: var(--azul-marino);      /* 7.64:1 */
+    --color-primario-hover: #dfc48d;
+    --color-secundario: var(--blanco);
+    --color-icono-fondo: rgba(207, 172, 101, 0.18);
+    --color-icono: var(--dorado);
+    --color-tabla-encabezado: var(--azul-marino);
+    --color-fila-alterna: rgba(255, 255, 255, 0.05);
+    --color-fila-seleccionada: rgba(207, 172, 101, 0.14);
+    --color-barra-lateral: #010f33;
+    --color-barra-lateral-activo: var(--azul-real);
+    --color-campo-fondo: var(--azul-marino);
+    --color-error: #ffc2b8;
+    --color-error-fondo: #2a1d4a;
+    --color-exito: #a3e4bb;
+
+    --bs-body-bg: var(--color-fondo);
+    --bs-body-color: var(--color-texto);
+    --bs-secondary-color: var(--color-texto-secundario);
+    --bs-border-color: var(--color-borde);
+    --bs-link-color: var(--color-enlace);
+    --bs-link-color-rgb: 207, 172, 101;
+    --bs-link-hover-color: #e6d1a6;
+    --bs-link-hover-color-rgb: 230, 209, 166;
+    --bs-heading-color: var(--color-texto);
+    --bs-form-invalid-color: var(--color-error);
+    --bs-form-invalid-border-color: var(--color-error);
+    --bs-form-valid-color: var(--color-exito);
+    --bs-form-valid-border-color: var(--color-exito);
+}
+
+
+/*  Base */
+body {
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    font-family: var(--fuente-sicen);
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4 {
+    font-weight: 700;
+    color: var(--color-texto);
+}
+
+.text-secondary,
+.texto-secundario {
+    color: var(--color-texto-secundario) !important;
+}
+
+/* Foco visible para quienes navegan con teclado: nunca se quita sin reemplazarlo */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+    outline: 3px solid var(--color-foco);
+    outline-offset: 2px;
+}
+
+
+.obligatorio {
+    color: var(--color-error);
+    font-weight: 700;
+}
+
+
+/*  Logo / marca */
+.logo-sicen {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;                  /* evita que el cuadro se deforme en celular */
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background-color: var(--azul-marino);
+    color: var(--blanco);
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.logo-sicen-grande {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    font-size: 1.4rem;
+}
+
+
+[data-bs-theme="dark"] .logo-sicen {
+    background-color: var(--blanco);
+    color: var(--azul-marino);
+}
+
+.nombre-sistema {
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+
+/*  Botones */
+.btn {
+    font-family: var(--fuente-sicen);
+    font-weight: 700;
+    border-radius: 6px;
+    padding: 0.55rem 1.25rem;
+}
+
+/* Botón primario: fondo Azul Real, texto blanco */
+.btn-primary {
+    --bs-btn-bg: var(--color-primario-fondo);
+    --bs-btn-border-color: var(--color-primario-fondo);
+    --bs-btn-color: var(--color-primario-texto);
+    --bs-btn-hover-bg: var(--color-primario-hover);
+    --bs-btn-hover-border-color: var(--color-primario-hover);
+    --bs-btn-hover-color: var(--color-primario-texto);
+    --bs-btn-active-bg: var(--color-primario-hover);
+    --bs-btn-active-border-color: var(--color-primario-hover);
+    --bs-btn-active-color: var(--color-primario-texto);
+    --bs-btn-disabled-bg: var(--color-primario-fondo);
+    --bs-btn-disabled-border-color: var(--color-primario-fondo);
+    --bs-btn-disabled-color: var(--color-primario-texto);
+}
+
+/* Botón secundario (outline): borde y texto Azul Real */
+.btn-outline-primary,
+.btn-outline-secondary {
+    --bs-btn-color: var(--color-secundario);
+    --bs-btn-border-color: var(--color-secundario);
+    --bs-btn-bg: transparent;
+    --bs-btn-hover-bg: var(--color-secundario);
+    --bs-btn-hover-border-color: var(--color-secundario);
+    --bs-btn-hover-color: var(--color-superficie);
+    --bs-btn-active-bg: var(--color-secundario);
+    --bs-btn-active-border-color: var(--color-secundario);
+    --bs-btn-active-color: var(--color-superficie);
+}
+
+/* Botón de corrección: fondo Dorado, texto Azul Marino (7.64:1) */
+.btn-correccion {
+    --bs-btn-bg: var(--dorado);
+    --bs-btn-border-color: var(--dorado);
+    --bs-btn-color: var(--azul-marino);
+    --bs-btn-hover-bg: #b9944c;
+    --bs-btn-hover-border-color: #b9944c;
+    --bs-btn-hover-color: var(--azul-marino);
+    --bs-btn-active-bg: #b9944c;
+    --bs-btn-active-border-color: #b9944c;
+    --bs-btn-active-color: var(--azul-marino);
+}
+
+/* En modo oscuro el botón primario también es dorado: la corrección pasa a outline dorado */
+[data-bs-theme="dark"] .btn-correccion {
+    --bs-btn-bg: transparent;
+    --bs-btn-color: var(--dorado);              /* 5.83:1 sobre Azul Real */
+    --bs-btn-hover-bg: var(--dorado);
+    --bs-btn-hover-color: var(--azul-marino);
+    --bs-btn-active-bg: var(--dorado);
+    --bs-btn-active-color: var(--azul-marino);
+}
+
+/* Botón de texto (acciones dentro de tablas, como "Ver" o "Configurar") */
+.btn-enlace {
+    padding: 0.2rem 0.4rem;
+    border: none;
+    background: transparent;
+    color: var(--color-enlace);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.btn-enlace:hover {
+    color: var(--color-texto);
+}
+
+/* Botón de ícono (editar, eliminar, mostrar contraseña) */
+.btn-icono {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--color-texto);
+}
+
+.btn-icono:hover {
+    background-color: var(--color-superficie-suave);
+}
+
+.btn-icono-eliminar {
+    color: var(--color-error);
+}
+
+
+/*  Interruptor de modo claro / oscuro */
+.btn-tema {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--color-borde);
+    border-radius: 6px;
+    background-color: var(--color-superficie);
+    color: var(--color-texto);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.btn-tema:hover {
+    border-color: var(--color-foco);
+}
+
+/* En las pantallas de inicio de sesión el botón queda fijo en la esquina */
+.btn-tema-flotante {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
+
+/*  Campos de formulario */
+.form-label,
+.etiqueta-campo {
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 0.35rem;
+    color: var(--color-texto);
+}
+
+/* Input, select y textarea: borde Gris Claro, foco en Azul Francia */
+.form-control,
+.form-select {
+    border: 1px solid var(--color-borde);
+    border-radius: 6px;
+    background-color: var(--color-campo-fondo);
+    color: var(--color-texto);
+    font-family: var(--fuente-sicen);
+    padding: 0.6rem 0.8rem;
+}
+
+.form-control::placeholder {
+    color: var(--color-texto-secundario);
+    opacity: 1;
+}
+
+.form-control:focus,
+.form-select:focus,
+.form-check-input:focus {
+    border-color: var(--color-foco);
+    background-color: var(--color-campo-fondo);
+    color: var(--color-texto);
+    box-shadow: 0 0 0 3px rgba(22, 70, 135, 0.25);
+}
+
+[data-bs-theme="dark"] .form-control:focus,
+[data-bs-theme="dark"] .form-select:focus,
+[data-bs-theme="dark"] .form-check-input:focus {
+    box-shadow: 0 0 0 3px rgba(207, 172, 101, 0.35);
+}
+
+/* Flecha del select en Azul Marino */
+.form-select {
+    --bs-form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23021a53' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+}
+
+[data-bs-theme="dark"] .form-select {
+    --bs-form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+}
+
+textarea.form-control {
+    min-height: 110px;
+}
+
+.input-group-text {
+    border-color: var(--color-borde);
+    background-color: var(--color-superficie-suave);
+    color: var(--color-texto);
+}
+
+.form-text {
+    color: var(--color-texto-secundario);
+    font-size: 0.8rem;
+}
+
+/* Checkbox marcado: relleno Azul Francia con marca blanca */
+.form-check-input {
+    border-color: var(--gris-pizarra);
+    background-color: var(--color-campo-fondo);
+}
+
+.form-check-input:checked {
+    background-color: var(--azul-francia);
+    border-color: var(--azul-francia);
+}
+
+/* En modo oscuro el azul no se distingue del fondo: se usa Dorado con marca Azul Marino */
+[data-bs-theme="dark"] .form-check-input {
+    border-color: var(--gris-claro);
+}
+
+[data-bs-theme="dark"] .form-check-input:checked {
+    background-color: var(--dorado);
+    border-color: var(--dorado);
+}
+
+[data-bs-theme="dark"] .form-check-input:checked[type="checkbox"] {
+    --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23021a53' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
+}
+
+[data-bs-theme="dark"] .form-check-input:checked[type="radio"] {
+    --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23021a53'/%3e%3c/svg%3e");
+}
+
+.form-check-label {
+    color: var(--color-texto);
+}
+
+/* Grupo de checkboxes con borde (provincias, centros) */
+.grupo-opciones {
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--color-borde);
+    border-radius: 6px;
+    background-color: var(--color-campo-fondo);
+}
+
+.grupo-opciones.is-invalid {
+    border-color: var(--color-error);
+}
+
+
+/*  Estados de validación (clases que agrega JavaScript) */
+.form-control.is-invalid,
+.form-select.is-invalid {
+    border-color: var(--color-error);
+    background-color: var(--color-error-fondo);
+}
+
+.form-control.is-valid,
+.form-select.is-valid {
+    border-color: var(--color-exito);
+}
+
+.invalid-feedback {
+    color: var(--color-error);
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+/* Ícono antes del mensaje: el error no depende solo del color */
+.invalid-feedback:not(:empty)::before {
+    content: "⚠ ";
+}
+
+
+/*  Tabla de datos: encabezado Azul Marino, filas alternadas */
+.tabla-sicen {
+    --bs-table-bg: var(--color-superficie);
+    --bs-table-color: var(--color-texto);
+    --bs-table-striped-bg: var(--color-fila-alterna);
+    --bs-table-striped-color: var(--color-texto);
+    --bs-table-hover-bg: var(--color-fila-seleccionada);
+    --bs-table-hover-color: var(--color-texto);
+    --bs-table-border-color: var(--color-borde);
+    margin-bottom: 0;
+}
+
+.tabla-sicen thead th {
+    background-color: var(--color-tabla-encabezado);
+    color: var(--blanco);
+    font-size: 0.85rem;
+    font-weight: 700;
+    white-space: nowrap;
+    padding: 0.85rem 1rem;
+}
+
+.tabla-sicen td,
+.tabla-sicen tbody th {
+    padding: 0.9rem 1rem;
+    vertical-align: middle;
+}
+
+.tabla-sicen tr.fila-seleccionada > * {
+    --bs-table-bg-state: var(--color-fila-seleccionada);
+}
+
+.contenedor-tabla {
+    overflow: hidden;
+    border: 1px solid var(--color-borde);
+    border-radius: 10px;
+    background-color: var(--color-superficie);
+}
+
+.pie-tabla {
+    padding: 0.75rem 1rem;
+    border-top: 1px solid var(--color-borde);
+    color: var(--color-texto-secundario);
+    font-size: 0.85rem;
+}
+
+
+/*  Etiquetas de estado (badges) */
+.badge-estado {
+    display: inline-block;
+    padding: 0.35rem 0.7rem;
+    border: 1px solid transparent;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* Borrador: fondo Gris Claro, texto Azul Marino (9.48:1) */
+.badge-borrador {
+    background-color: var(--gris-claro);
+    color: var(--azul-marino);
+}
+
+/* En registro: fondo blanco, borde y texto Azul Francia (9.29:1) */
+.badge-en-registro {
+    background-color: var(--blanco);
+    border-color: var(--azul-francia);
+    color: var(--azul-francia);
+}
+
+/* En revisión: fondo Azul Real, texto blanco (12.56:1) */
+.badge-en-revision {
+    background-color: var(--azul-real);
+    color: var(--blanco);
+}
+
+/* Abierto y Aceptado: fondo Azul Francia, texto blanco (9.29:1) */
+.badge-abierto,
+.badge-aceptado {
+    background-color: var(--azul-francia);
+    color: var(--blanco);
+}
+
+/* Pausado y En subsane: fondo Dorado, texto Azul Marino (7.64:1) */
+.badge-pausado,
+.badge-en-subsane {
+    background-color: var(--dorado);
+    color: var(--azul-marino);
+}
+
+/* Cerrado: fondo Gris Pizarra, texto blanco (5.85:1) */
+.badge-cerrado {
+    background-color: var(--gris-pizarra);
+    color: var(--blanco);
+}
+
+/* En modo oscuro los badges azules llevan borde para separarse del fondo */
+[data-bs-theme="dark"] .badge-en-revision,
+[data-bs-theme="dark"] .badge-abierto,
+[data-bs-theme="dark"] .badge-aceptado,
+[data-bs-theme="dark"] .badge-cerrado {
+    border-color: var(--gris-claro);
+}
+
+/* Rol del colaborador: badge neutro para no confundirlo con un estado */
+.badge-rol {
+    background-color: transparent;
+    border-color: var(--color-borde);
+    color: var(--color-texto);
+}
+
+/* Tipo de pregunta: fondo Azul Francia, texto blanco */
+.badge-tipo {
+    background-color: var(--azul-francia);
+    color: var(--blanco);
+}
+
+/* Insignias de formularios vinculados a un censo */
+.badge-formulario {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.5rem 0.35rem 0.8rem;
+    border: 1px solid var(--azul-francia);
+    border-radius: 20px;
+    background-color: var(--blanco);
+    color: var(--azul-francia);
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.badge-formulario button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--azul-francia);
+}
+
+.badge-formulario button:hover {
+    background-color: rgba(22, 70, 135, 0.12);
+}
+
+.contenedor-badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 3rem;
+    padding: 0.6rem;
+    border: 1px dashed var(--color-borde);
+    border-radius: 6px;
+    background-color: var(--color-campo-fondo);
+}
+
+
+/*  Barra de progreso: track Gris Claro, relleno Azul Francia */
+.progress {
+    --bs-progress-bg: var(--gris-claro);
+    --bs-progress-bar-bg: var(--azul-francia);
+    height: 8px;
+    border-radius: 8px;
+}
+
+[data-bs-theme="dark"] .progress {
+    --bs-progress-bg: rgba(193, 197, 200, 0.35);
+    --bs-progress-bar-bg: var(--dorado);
+}
+
+.progress-bar {
+    transition: width 0.4s ease;
+}
+
+
+/*  Barra de búsqueda con ícono de lupa decorativo */
+.campo-busqueda {
+    position: relative;
+}
+
+.campo-busqueda .fa-magnifying-glass {
+    position: absolute;
+    top: 50%;
+    left: 0.85rem;
+    transform: translateY(-50%);
+    color: var(--color-texto-secundario);
+    pointer-events: none;
+}
+
+.campo-busqueda .form-control {
+    padding-left: 2.4rem;
+}
+
+.busqueda-corta {
+    max-width: 420px;
+}
+
+
+/*  Pie de página (pantallas de acceso y vista del Director) */
+.pie-acceso {
+    margin-top: 1.75rem;
+    color: var(--color-texto-secundario);
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.pie-acceso p {
+    margin-bottom: 0.1rem;
+}
+
+
+/*  Avisos informativos (con ícono) */
+.aviso-informativo {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    padding: 0.85rem 1rem;
+    border-radius: 8px;
+    background-color: var(--color-icono-fondo);
+    font-size: 0.85rem;
+}
+
+.aviso-informativo i {
+    margin-top: 0.2rem;
+    color: var(--color-icono);
+}
+
+/*  Campo de contraseña con botón para mostrarla u ocultarla */
+.campo-contrasena {
+    position: relative;
+}
+
+.campo-contrasena .form-control {
+    padding-right: 3rem;
+}
+
+.campo-contrasena .btn-icono {
+    position: absolute;
+    top: 0;
+    right: 0.25rem;
+    height: 100%;
+}
+
+/* Bootstrap mueve el ícono de error; se deja espacio para el botón del ojo */
+.campo-contrasena .form-control.is-invalid,
+.campo-contrasena .form-control.is-valid {
+    background-position: right 2.6rem center;
+}
+
+
+/*  SweetAlert2: tipografía y colores institucionales */
+.swal2-popup {
+    font-family: var(--fuente-sicen);
+}
+
+[data-bs-theme="dark"] .swal2-popup {
+    background-color: var(--azul-real);
+    color: var(--blanco);
+}
+
+[data-bs-theme="dark"] .swal2-title,
+[data-bs-theme="dark"] .swal2-html-container {
+    color: var(--blanco);
+}
+
+
+/*  Animaciones que JavaScript activa con clases */
+.aparecer {
+    animation: aparecer 0.3s ease-out;
+}
+
+@keyframes aparecer {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Respeta a quienes configuraron "reducir movimiento" en su sistema */
+@media (prefers-reduced-motion: reduce) {
+    .aparecer {
+        animation: none;
+    }
+
+    .progress-bar {
+        transition: none;
+    }
+}
