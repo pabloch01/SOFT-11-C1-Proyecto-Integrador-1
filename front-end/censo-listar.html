@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SICEN | Gestión de Censos</title>
+
+    <!--  Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+
+    <!--  Font Awesome 6 (íconos) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!--  Tipografía institucional: Libre Baskerville -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+
+    <!--  Estilos propios: siempre después de Bootstrap. estilo.css va primero porque define las variables -->
+    <link rel="stylesheet" href="css/estilo.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+
+    <!--  Modo claro / oscuro -->
+    <script src="js/tema.js"></script>
+</head>
+
+<body>
+
+    <!--  Enlace para saltar la navegación -->
+    <a class="enlace-saltar" href="#contenido">Saltar al contenido principal</a>
+
+    <div class="diseno-panel">
+
+        <!--  Barra lateral: en celular se abre como panel deslizable (offcanvas) -->
+        <aside class="barra-lateral offcanvas-lg offcanvas-start" tabindex="-1" id="barraLateral"
+            aria-label="Menú de administración">
+            <div class="offcanvas-header d-lg-none">
+                <p class="h5 mb-0 text-white">Menú</p>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#barraLateral"
+                    aria-label="Cerrar menú"></button>
+            </div>
+
+            <div class="offcanvas-body d-flex flex-column">
+                <a href="dashboard-admin.html" class="marca-barra-lateral">
+                    <span class="logo-sicen" aria-hidden="true">CR</span> SICEN
+                </a>
+                <p class="subtitulo-marca">Ministerio de Educación Pública</p>
+
+                <nav aria-label="Navegación principal">
+                    <ul class="menu-lateral">
+                        <li>
+                            <a href="dashboard-admin.html">
+                                <i class="fa-solid fa-table-cells-large" aria-hidden="true"></i> Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <a href="formulario-registrar.html">
+                                <i class="fa-regular fa-file-lines" aria-hidden="true"></i> Formularios
+                            </a>
+                        </li>
+                        <li>
+                            <a href="censo-listar.html" aria-current="page">
+                                <i class="fa-solid fa-box-archive" aria-hidden="true"></i> Censos
+                            </a>
+                        </li>
+                        <li>
+                            <a href="colaborador-listar.html">
+                                <i class="fa-solid fa-user-group" aria-hidden="true"></i> Colaboradores
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html">
+                                <i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i> Cerrar sesión
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="pie-barra-lateral">
+                    <p class="mb-0">Dirección de Planificación</p>
+                    <p class="mb-0">v1.0 — 2026</p>
+                </div>
+            </div>
+        </aside>
+
+        <div class="columna-contenido">
+
+            <!--  Encabezado superior -->
+            <header class="encabezado-superior">
+                <button type="button" class="btn-icono d-lg-none" data-bs-toggle="offcanvas"
+                    data-bs-target="#barraLateral" aria-controls="barraLateral" aria-label="Abrir menú">
+                    <i class="fa-solid fa-bars" aria-hidden="true"></i>
+                </button>
+                <h1 class="me-auto">Gestión de Censos</h1>
+
+                <button type="button" class="btn-tema" aria-pressed="false">
+                    <i class="fa-regular fa-moon" aria-hidden="true"></i>
+                    <span>Modo oscuro</span>
+                </button>
+
+                <div class="datos-usuario">
+                    <div>
+                        <p class="nombre-usuario">Jefatura DAE</p>
+                        <p class="detalle-usuario">jefatura.dae@mep.go.cr</p>
+                    </div>
+                    <span class="avatar-iniciales" aria-hidden="true">JD</span>
+                </div>
+            </header>
+
+            <!--  Contenido principal -->
+            <main id="contenido" class="contenido-principal" tabindex="-1">
+
+                <!--  Búsqueda y botón para crear un censo -->
+                <div class="d-flex flex-column flex-md-row justify-content-between gap-3 mb-3">
+                    <div class="campo-busqueda busqueda-corta flex-grow-1">
+                        <label for="buscarCenso" class="visually-hidden">Buscar censo por nombre</label>
+                        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                        <input type="search" id="buscarCenso" class="form-control" placeholder="Buscar censo…">
+                    </div>
+                    <button type="button" id="btnNuevoCenso" class="btn btn-primary">
+                        <i class="fa-solid fa-plus me-1" aria-hidden="true"></i> Nuevo Censo
+                    </button>
+                </div>
+
+                <!--  Tabla de censos -->
+                <section class="contenedor-tabla mb-4" aria-labelledby="tituloListaCensos">
+                    <h2 class="visually-hidden" id="tituloListaCensos">Lista de censos</h2>
+                    <div class="table-responsive">
+                        <table class="table tabla-sicen table-striped">
+                            <caption class="visually-hidden">Censos registrados con su estado, formularios asociados y fechas</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Estado</th>
+                                    <th scope="col">Formularios</th>
+                                    <th scope="col">Fecha de apertura</th>
+                                    <th scope="col">Fecha de cierre</th>
+                                    <th scope="col" class="text-end">Acciones</th>
+                                </tr>
+                            </thead>
+                            <!--  JavaScript crea una fila por cada censo -->
+                            <tbody id="cuerpoTablaCensos"></tbody>
+                        </table>
+                    </div>
+                    <p class="pie-tabla mb-0" id="resumenCensos" aria-live="polite"></p>
+                </section>
+
+                <!--  Configuración del censo (RF-005 y RF-006) -->
+                <form id="formCenso" class="panel" novalidate aria-labelledby="tituloConfiguracion">
+                    <h2 class="titulo-seccion mb-1" id="tituloConfiguracion" tabindex="-1">Configuración del censo</h2>
+                    <p class="subtitulo-panel">
+                        Configure los parámetros del censo escolar para su distribución. Los campos con
+                        <span class="obligatorio" aria-hidden="true">*</span><span class="visually-hidden">asterisco</span>
+                        son obligatorios.
+                    </p>
+
+                    <!--  Datos generales -->
+                    <div class="row g-3 mb-3">
+                        <div class="col-12 col-lg-6">
+                            <label for="nombreCenso" class="form-label">
+                                Nombre del censo <span class="obligatorio" aria-hidden="true">*</span>
+                            </label>
+                            <input type="text" id="nombreCenso" name="nombreCenso" class="form-control" maxlength="80"
+                                placeholder="Ej. Censo Matrícula Inicial 2027" required aria-describedby="error-nombreCenso">
+                            <div class="invalid-feedback" id="error-nombreCenso"></div>
+                        </div>
+
+                        <div class="col-12 col-md-4 col-lg-2">
+                            <label for="fechaApertura" class="form-label">
+                                Fecha de apertura <span class="obligatorio" aria-hidden="true">*</span>
+                            </label>
+                            <input type="date" id="fechaApertura" name="fechaApertura" class="form-control" required
+                                aria-describedby="error-fechaApertura">
+                            <div class="invalid-feedback" id="error-fechaApertura"></div>
+                        </div>
+
+                        <div class="col-12 col-md-4 col-lg-2">
+                            <label for="fechaCierre" class="form-label">
+                                Fecha de cierre <span class="obligatorio" aria-hidden="true">*</span>
+                            </label>
+                            <input type="date" id="fechaCierre" name="fechaCierre" class="form-control" required
+                                aria-describedby="ayuda-fechaCierre error-fechaCierre">
+                            <div class="form-text" id="ayuda-fechaCierre">Posterior a la apertura.</div>
+                            <div class="invalid-feedback" id="error-fechaCierre"></div>
+                        </div>
+
+                        <!--  Control manual del censo (RF-006) -->
+                        <div class="col-12 col-md-4 col-lg-2">
+                            <label for="estadoCenso" class="form-label">
+                                Estado <span class="obligatorio" aria-hidden="true">*</span>
+                            </label>
+                            <select id="estadoCenso" name="estadoCenso" class="form-select" required
+                                aria-describedby="error-estadoCenso">
+                                <option value="borrador">Borrador</option>
+                                <option value="abierto">Abierto</option>
+                                <option value="pausado">Pausado</option>
+                                <option value="cerrado">Cerrado</option>
+                            </select>
+                            <div class="invalid-feedback" id="error-estadoCenso"></div>
+                        </div>
+                    </div>
+
+                    <div class="row g-3">
+                        <!--  Formularios asociados: JavaScript crea una insignia por cada formulario vinculado -->
+                        <div class="col-12 col-lg-6">
+                            <fieldset class="seccion-form mb-0" aria-describedby="ayuda-formularios error-selectFormulario">
+                                <legend class="form-label">
+                                    Formularios asociados <span class="obligatorio" aria-hidden="true">*</span>
+                                </legend>
+                                <div id="contenedorBadges" class="contenedor-badges mb-2" aria-live="polite"></div>
+
+                                <div class="d-flex gap-2">
+                                    <label for="selectFormulario" class="visually-hidden">Formulario para vincular</label>
+                                    <select id="selectFormulario" class="form-select" aria-describedby="error-selectFormulario">
+                                        <option value="">Seleccione un formulario para vincular</option>
+                                    </select>
+                                    <button type="button" id="btnVincular" class="btn btn-outline-primary text-nowrap">
+                                        <i class="fa-solid fa-link me-1" aria-hidden="true"></i> Vincular
+                                    </button>
+                                </div>
+                                <div class="form-text" id="ayuda-formularios">Un censo puede tener hasta 14 formularios.</div>
+                                <div class="invalid-feedback" id="error-selectFormulario"></div>
+                            </fieldset>
+                        </div>
+
+                        <!--  Centros educativos asignados -->
+                        <div class="col-12 col-lg-6">
+                            <fieldset class="seccion-form mb-0" aria-describedby="error-grupoCentros">
+                                <legend class="form-label">
+                                    Centros educativos asignados <span class="obligatorio" aria-hidden="true">*</span>
+                                </legend>
+                                <!--  JavaScript crea un checkbox por cada centro -->
+                                <div class="grupo-opciones" id="grupoCentros"></div>
+                                <button type="button" id="btnMarcarTodos" class="btn-enlace small mt-1">Marcar todos</button>
+                                <div class="invalid-feedback" id="error-grupoCentros"></div>
+                            </fieldset>
+                        </div>
+                    </div>
+
+                    <!--  Botones -->
+                    <div class="d-flex flex-column flex-md-row justify-content-end gap-2 mt-4">
+                        <button type="button" id="btnCancelar" class="btn btn-outline-secondary">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa-solid fa-floppy-disk me-1" aria-hidden="true"></i> Guardar cambios
+                        </button>
+                    </div>
+                </form>
+            </main>
+        </div>
+    </div>
+
+    <!--  Scripts: primero las bibliotecas de terceros, al final los propios -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="js/validaciones.js"></script>
+    <script src="js/datos-ejemplo.js"></script>
+    <script src="js/censo-listar.js"></script>
+</body>
+
+</html>
